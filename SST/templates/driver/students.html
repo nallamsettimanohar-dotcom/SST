@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Driver - Students</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<h1>👨‍🎓 Students in My Bus</h1>
+
+{% if students %}
+
+{% for student in students %}
+
+<div>
+
+    <h2>{{ student.student_name }}</h2>
+
+    <p>
+        <strong>Student ID:</strong>
+        {{ student.student_id }}
+    </p>
+
+    <p>
+        <strong>Roll Number:</strong>
+        {{ student.roll_number }}
+    </p>
+
+    <p>
+        <strong>Class:</strong>
+        {{ student.class_name }}
+    </p>
+
+    <p>
+        <strong>Pickup Point:</strong>
+        {{ student.pickup_point }}
+    </p>
+
+    <p>
+        <strong>Drop Point:</strong>
+        {{ student.drop_point }}
+    </p>
+
+</div>
+
+<hr>
+
+{% endfor %}
+
+{% else %}
+
+<p>❌ No students are assigned to your bus.</p>
+
+{% endif %}
+
+<br>
+
+<a href="{{ url_for('dashboard') }}">
+    ← Back to Dashboard
+</a>
+
+</body>
+</html>

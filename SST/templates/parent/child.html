@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Child Details</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<h1>👨‍👩‍👧 Child Details</h1>
+
+{% if child %}
+
+<h2>{{ child.student_name }}</h2>
+
+<p>
+    <strong>Student ID:</strong>
+    {{ child.student_id }}
+</p>
+
+<p>
+    <strong>Roll Number:</strong>
+    {{ child.roll_number }}
+</p>
+
+<p>
+    <strong>Class:</strong>
+    {{ child.class_name }}
+</p>
+
+<p>
+    <strong>Pickup Point:</strong>
+    {{ child.pickup_point }}
+</p>
+
+<p>
+    <strong>Drop Point:</strong>
+    {{ child.drop_point }}
+</p>
+
+<p>
+    <strong>Bus ID:</strong>
+    {{ child.bus_id or "Not assigned" }}
+</p>
+
+{% else %}
+
+<p>❌ No child is linked to your account.</p>
+
+{% endif %}
+
+<br>
+
+<a href="{{ url_for('dashboard') }}">
+    ← Back to Dashboard
+</a>
+
+</body>
+</html>

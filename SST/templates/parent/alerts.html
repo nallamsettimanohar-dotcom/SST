@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Emergency Alerts</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<h1>🚨 Emergency Alerts</h1>
+
+{% if alerts %}
+
+{% for alert in alerts %}
+
+<div>
+
+    <h2>🚨 Emergency Alert</h2>
+
+    <p>
+        <strong>Bus:</strong>
+        {{ alert.bus_number }}
+    </p>
+
+    <p>
+        <strong>Message:</strong>
+        {{ alert.message }}
+    </p>
+
+    <p>
+        <strong>Latitude:</strong>
+        {{ alert.latitude or "Not available" }}
+    </p>
+
+    <p>
+        <strong>Longitude:</strong>
+        {{ alert.longitude or "Not available" }}
+    </p>
+
+    <p>
+        <strong>Time:</strong>
+        {{ alert.created_at }}
+    </p>
+
+</div>
+
+<hr>
+
+{% endfor %}
+
+{% else %}
+
+<p>✅ No emergency alerts.</p>
+
+{% endif %}
+
+<br>
+
+<a href="{{ url_for('dashboard') }}">
+    ← Back to Dashboard
+</a>
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Driver - Bus Details</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<h1>🚌 Bus Details</h1>
+
+{% if bus %}
+
+<h2>Assigned Bus</h2>
+
+<p>
+    <strong>Bus ID:</strong>
+    {{ bus.bus_id }}
+</p>
+
+<p>
+    <strong>Bus Number:</strong>
+    {{ bus.bus_number }}
+</p>
+
+<p>
+    <strong>Driver ID:</strong>
+    {{ bus.driver_id }}
+</p>
+
+<p>
+    <strong>Capacity:</strong>
+    {{ bus.capacity }}
+</p>
+
+<p>
+    <strong>Status:</strong>
+    {{ bus.status }}
+</p>
+
+<p>
+    <strong>Current Latitude:</strong>
+    {{ bus.current_lat or "Not available" }}
+</p>
+
+<p>
+    <strong>Current Longitude:</strong>
+    {{ bus.current_lng or "Not available" }}
+</p>
+
+<p>
+    <strong>Last Location Update:</strong>
+    {{ bus.last_location_update or "Not available" }}
+</p>
+
+{% else %}
+
+<p>❌ No bus has been assigned to you.</p>
+
+{% endif %}
+
+<br>
+
+<a href="{{ url_for('dashboard') }}">
+    ← Back to Dashboard
+</a>
+
+</body>
+</html>

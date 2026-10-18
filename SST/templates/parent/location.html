@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Live Bus Location</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<h1>📍 Live Bus Location</h1>
+
+{% if bus %}
+
+<p>
+    <strong>Bus:</strong>
+    {{ bus.bus_number }}
+</p>
+
+<p id="location-status">
+    Loading location...
+</p>
+
+<div id="location-details">
+    Waiting for GPS location...
+</div>
+
+<br>
+
+<a id="map-link"
+   href="#"
+   target="_blank">
+
+    🗺️ Open in Google Maps
+
+</a>
+
+<script>
+
+const busId = "{{ bus.bus_id }}";
+
+
+function loadLocation() {
+
+    fetch(
+        "/api/bus/" +
+        busId +
+        "/location"
+    )
+
+    .then(response => response.json())
+
+    .then(data => {
+
+        const status =
+            document.getElementById(
+                "location-status"
+            );
+
+        const details =
+            document.getElementById(
+                "location-details"
+            );
+
+        const map =
+            document.getElementById(
+                "map-link"
+            );
+
+
+        if (!data.available) {
+
+            status.innerText =
+                "🟡 Bus location unavailable.";
+
+            details.innerText =
+                "Waiting for driver GPS.";
+
+            return;
+        }
+
+
+        status.innerText =
+            "🟢 Bus location available";
+
+
+        details.innerHTML =
+
+            "<strong>Latitude:</strong> " +
+            data.latitude +
+
+            "<br><strong>Longitude:</strong> " +
+            data.longitude +
+
+            "<br><br><strong>Last Updated:</strong> " +
+            data.recorded_at;
+
+
+        map.href =
+            "https://www.google.com/maps?q=" +
+            data.latitude +
+            "," +
+            data.longitude;
+
+    })
+
+    .catch(error => {
+
+        console.error(error);
+
+        document.getElementById(
+            "location-status"
+        ).innerText =
+            "❌ Unable to load location.";
+    });
+}
+
+
+loadLocation();
+
+setInterval(
+    loadLocation,
+    5000
+);
+
+</script>
+
+{% else %}
+
+<p>❌ No bus is assigned.</p>
+
+{% endif %}
+
+<br>
+
+<a href="{{ url_for('dashboard') }}">
+    ← Back to Dashboard
+</a>
+
+</body>
+</html>

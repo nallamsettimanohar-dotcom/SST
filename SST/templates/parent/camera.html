@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Bus Camera</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<h1>📹 Bus Camera</h1>
+
+<p>
+    Authorized camera activity from your child's bus.
+</p>
+
+{% if latest_activity %}
+
+<p>
+    <strong>Bus:</strong>
+    {{ latest_activity.bus_number }}
+</p>
+
+<p>
+    <strong>Activity:</strong>
+    {{ latest_activity.activity_type }}
+</p>
+
+{% if latest_activity.image_path %}
+
+<img
+    src="{{ url_for('static',
+                   filename=latest_activity.image_path) }}"
+    width="700"
+    alt="Latest Bus Camera Snapshot">
+
+{% endif %}
+
+<p>
+    <strong>Time:</strong>
+    {{ latest_activity.created_at }}
+</p>
+
+{% else %}
+
+<h3>🟡 No camera activity available.</h3>
+
+<p>
+    The driver has not uploaded a camera snapshot yet.
+</p>
+
+{% endif %}
+
+<br>
+
+<p>
+    🔒 Camera access is restricted to authorized parents.
+</p>
+
+<a href="{{ url_for('dashboard') }}">
+    ← Back to Dashboard
+</a>
+
+</body>
+</html>

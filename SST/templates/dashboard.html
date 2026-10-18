@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>School Bus System - Dashboard</title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="navbar navbar-dark bg-dark">
+
+    <div class="container-fluid">
+
+        <span class="navbar-brand">
+            🚌 School Bus System
+        </span>
+
+        <div>
+
+            <span class="text-white me-3">
+                {{ name }}
+            </span>
+
+            <a
+                href="/logout"
+                class="btn btn-danger">
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- =====================================================
+     MAIN DASHBOARD
+===================================================== -->
+
+<div class="container mt-4">
+
+
+    <div class="mb-4">
+
+        <h1>
+            Welcome, {{ name }} 👋
+        </h1>
+
+        <p class="text-muted">
+
+            Account Type:
+
+            <strong>
+                {{ role|upper }}
+            </strong>
+
+        </p>
+
+    </div>
+
+
+    <!-- =================================================
+         ADMIN DASHBOARD
+    ================================================== -->
+
+    {% if role == "admin" %}
+
+    <h2 class="mb-3">
+        Admin Dashboard
+    </h2>
+
+
+    <div class="row g-4">
+
+
+        <!-- Students -->
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body">
+
+                    <h5>👨‍🎓 Students</h5>
+
+                    <p>
+                        Manage registered students.
+                    </p>
+
+                    <a
+                        href="#"
+                        class="btn btn-primary">
+
+                        Manage Students
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Parents -->
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body">
+
+                    <h5>👨‍👩‍👧 Parents</h5>
+
+                    <p>
+                        View and manage parent accounts.
+                    </p>
+
+                    <a
+                        href="#"
+                        class="btn btn-primary">
+
+                        Manage Parents
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Drivers -->
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body">
+
+                    <h5>🧑‍✈️ Drivers</h5>
+
+                    <p>
+                        Manage drivers and assignments.
+                    </p>
+
+                    <a
+                        href="#"
+                        class="btn btn-primary">
+
+                        Manage Drivers
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Buses -->
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body">
+
+                    <h5>🚌 Buses</h5>
+
+                    <p>
+                        Manage school buses.
+                    </p>
+
+                    <a
+                        href="#"
+                        class="btn btn-primary">
+
+                        Manage Buses
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Routes -->
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body">
+
+                    <h5>🗺️ Routes</h5>
+
+                    <p>
+                        Manage bus routes and stops.
+                    </p>
+
+                    <a
+                        href="#"
+                        class="btn btn-primary">
+
+                        Manage Routes
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Monitoring -->
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body">
+
+                    <h5>📊 System Monitoring</h5>
+
+                    <p>
+                        Monitor buses and system activity.
+                    </p>
+
+                    <a
+                        href="#"
+                        class="btn btn-primary">
+
+                        Monitor System
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- NEW: Emergency Monitoring -->
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body">
+
+                    <h5>🚨 Emergency Alerts</h5>
+
+                    <p>
+                        Monitor active bus emergencies.
+                    </p>
+
+                    <a
+                        href="/admin/emergency-alerts"
+                        class="btn btn-danger">
+
+                        View Alerts
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- NEW: Camera Monitoring -->
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body">
+
+                    <h5>📹 Bus Cameras</h5>
+
+                    <p>
+                        View authorized bus camera activity.
+                    </p>
+
+                    <a
+                        href="/admin/cameras"
+                        class="btn btn-warning">
+
+                        Monitor Cameras
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- NEW: Notifications -->
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body">
+
+                    <h5>🔔 Notifications</h5>
+
+                    <p>
+                        View system notifications.
+                    </p>
+
+                    <a
+                        href="/notifications"
+                        class="btn btn-info">
+
+                        Notifications
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         PARENT DASHBOARD
+    ================================================== -->
+
+    {% elif role == "parent" %}
+
+
+    <h2 class="mb-3">
+        Parent Dashboard
+    </h2>
+
+
+    <div class="row g-4">
+
+
+        <!-- Child -->
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body">
+
+                    <h5>👨‍🎓 My Child</h5>
+
+                    <p>
+                        View your child's details.
+                    </p>
+
+                    <a
+                        href="/child-details"
+                        class="btn btn-primary">
+
+                        Child Details
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Bus -->
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body">
+
+                    <h5>🚌 Bus Details</h5>
+
+                    <p>
+                        View assigned bus and route.
+                    </p>
+
+                    <a
+                        href="/bus-details"
+                        class="btn btn-primary">
+
+                        View Bus
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Live Location -->
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body">
+
+                    <h5>📍 Bus Location</h5>
+
+                    <p>
+                        Track your child's bus.
+                    </p>
+
+                    <a
+                        href="/track-bus"
+                        class="btn btn-success">
+
+                        Track Bus
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Journey -->
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body">
+
+                    <h5>🛣️ Journey</h5>
+
+                    <p>
+                        View current and previous journeys.
+                    </p>
+
+                    <a
+                        href="/parent-journey"
+                        class="btn btn-primary">
+
+                        Journey History
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Attendance -->
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body">
+
+                    <h5>✅ Attendance</h5>
+
+                    <p>
+                        Check pickup and drop attendance.
+                    </p>
+
+                    <a
+                        href="/parent-attendance"
+                        class="btn btn-primary">
+
+                        View Attendance
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Bus Activity -->
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body">
+
+                    <h5>📹 Bus Activity</h5>
+
+                    <p>
+                        View authorized bus activities.
+                    </p>
+
+                    <a
+                        href="/parent-activity"
+                        class="btn btn-warning">
+
+                        View Activity
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- NEW: Live Camera -->
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body">
+
+                    <h5>🎥 Live Bus Camera</h5>
+
+                    <p>
+                        Watch the live footage from your child's bus.
+                    </p>
+
+                    <a
+                        href="/parent-camera"
+                        class="btn btn-danger">
+
+                        View Live Camera
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- NEW: Notifications -->
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body">
+
+                    <h5>🔔 Notifications</h5>
+
+                    <p>
+                        View boarding, drop and system notifications.
+                    </p>
+
+                    <a
+                        href="/notifications"
+                        class="btn btn-info">
+
+                        View Notifications
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- NEW: Emergency Alerts -->
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body">
+
+                    <h5>🚨 Emergency Alerts</h5>
+
+                    <p>
+                        View emergency alerts from your child's bus.
+                    </p>
+
+                    <a
+                        href="/parent-emergency"
+                        class="btn btn-danger">
+
+                        View Alerts
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         DRIVER DASHBOARD
+    ================================================== -->
+
+    {% elif role == "driver" %}
+
+
+    <h2 class="mb-3">
+        Driver Dashboard
+    </h2>
+
+
+    <div class="row g-4">
+
+
+        <!-- Assigned Bus -->
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body">
+
+                    <h5>🚌 Assigned Bus</h5>
+
+                    <p>
+                        View your assigned bus.
+                    </p>
+
+                    <a
+                        href="/driver/bus"
+                        class="btn btn-primary">
+
+                        Bus Details
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Route -->
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body">
+
+                    <h5>🗺️ Route</h5>
+
+                    <p>
+                        View today's assigned route.
+                    </p>
+
+                    <a
+                        href="/driver/route"
+                        class="btn btn-primary">
+
+                        View Route
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Students -->
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body">
+
+                    <h5>👨‍🎓 Students</h5>
+
+                    <p>
+                        View students assigned to your bus.
+                    </p>
+
+                    <a
+                        href="/driver/students"
+                        class="btn btn-primary">
+
+                        Student List
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Attendance -->
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body">
+
+                    <h5>✅ Attendance</h5>
+
+                    <p>
+                        Record student pickup and drop.
+                    </p>
+
+                    <a
+                        href="/driver/attendance"
+                        class="btn btn-success">
+
+                        Attendance
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Start Journey -->
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body">
+
+                    <h5>▶️ Journey</h5>
+
+                    <p>
+                        Start or manage today's journey.
+                    </p>
+
+                    <a
+                        href="/driver/journey"
+                        class="btn btn-success">
+
+                        Start Journey
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Emergency -->
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body">
+
+                    <h5>🚨 Emergency</h5>
+
+                    <p>
+                        Report an emergency situation.
+                    </p>
+
+                    <a
+                        href="/emergency"
+                        class="btn btn-danger">
+
+                        Emergency
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- NEW: Live Tracking -->
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body">
+
+                    <h5>📍 Live Location</h5>
+
+                    <p>
+                        Share your bus location with authorized users.
+                    </p>
+
+                    <a
+                        href="/driver-tracking"
+                        class="btn btn-success">
+
+                        Start Tracking
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- NEW: Bus Camera -->
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body">
+
+                    <h5>📹 Bus Camera</h5>
+
+                    <p>
+                        Start the camera inside your assigned bus.
+                    </p>
+
+                    <a
+                        href="/driver-camera"
+                        class="btn btn-warning">
+
+                        Start Camera
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- NEW: Notifications -->
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body">
+
+                    <h5>🔔 Notifications</h5>
+
+                    <p>
+                        View important system notifications.
+                    </p>
+
+                    <a
+                        href="/notifications"
+                        class="btn btn-info">
+
+                        Notifications
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         STUDENT DASHBOARD
+    ================================================== -->
+
+    {% elif role == "student" %}
+
+
+    <h2 class="mb-3">
+        Student Dashboard
+    </h2>
+
+
+    <div class="row g-4">
+
+
+        <!-- Bus -->
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body">
+
+                    <h5>🚌 My Bus</h5>
+
+                    <p>
+                        View your assigned bus.
+                    </p>
+
+                    <a
+                        href="#"
+                        class="btn btn-primary">
+
+                        Bus Details
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Pickup -->
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body">
+
+                    <h5>📍 Pickup Point</h5>
+
+                    <p>
+                        View your pickup location.
+                    </p>
+
+                    <a
+                        href="#"
+                        class="btn btn-primary">
+
+                        Pickup Details
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Route -->
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body">
+
+                    <h5>🗺️ My Route</h5>
+
+                    <p>
+                        View your assigned route.
+                    </p>
+
+                    <a
+                        href="#"
+                        class="btn btn-primary">
+
+                        View Route
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Journey -->
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body">
+
+                    <h5>🛣️ Journey</h5>
+
+                    <p>
+                        View today's journey information.
+                    </p>
+
+                    <a
+                        href="#"
+                        class="btn btn-primary">
+
+                        Journey
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Notifications -->
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body">
+
+                    <h5>🔔 Notifications</h5>
+
+                    <p>
+                        View bus and journey notifications.
+                    </p>
+
+                    <a
+                        href="/notifications"
+                        class="btn btn-warning">
+
+                        Notifications
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Profile -->
+
+        <div class="col-md-4">
+
+            <div class="card dashboard-card">
+
+                <div class="card-body">
+
+                    <h5>👤 My Profile</h5>
+
+                    <p>
+                        View your account information.
+                    </p>
+
+                    <a
+                        href="#"
+                        class="btn btn-primary">
+
+                        Profile
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    {% endif %}
+
+
+</div>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script
+    src="{{ url_for('static', filename='js/script.js') }}">
+</script>
+
+
+</body>
+
+</html>
