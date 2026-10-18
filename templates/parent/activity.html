@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Bus Activities</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<h1>📸 Bus Activities</h1>
+
+{% if activities %}
+
+{% for activity in activities %}
+
+<div>
+
+    <h2>
+        {{ activity.activity_type }}
+    </h2>
+
+    <p>
+        <strong>Bus:</strong>
+        {{ activity.bus_number }}
+    </p>
+
+    <p>
+        {{ activity.description }}
+    </p>
+
+    <p>
+        {{ activity.created_at }}
+    </p>
+
+    {% if activity.image_path %}
+
+    <img
+        src="{{ url_for('static',
+                       filename=activity.image_path) }}"
+        width="500"
+        alt="Bus Activity">
+
+    {% endif %}
+
+</div>
+
+<hr>
+
+{% endfor %}
+
+{% else %}
+
+<p>📭 No activities available.</p>
+
+{% endif %}
+
+<br>
+
+<a href="{{ url_for('dashboard') }}">
+    ← Back to Dashboard
+</a>
+
+</body>
+</html>

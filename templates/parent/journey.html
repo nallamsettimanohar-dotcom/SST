@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Journey History</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<h1>🚌 Journey History</h1>
+
+{% if journeys %}
+
+{% for journey in journeys %}
+
+<div>
+
+    <h2>
+        {{ journey.student_name }}
+    </h2>
+
+    <p>
+        <strong>Bus:</strong>
+        {{ journey.bus_number }}
+    </p>
+
+    <p>
+        <strong>Status:</strong>
+        {{ journey.status }}
+    </p>
+
+    <p>
+        <strong>Boarding:</strong>
+        {{ journey.boarding_time or "Not recorded" }}
+    </p>
+
+    <p>
+        <strong>Exit:</strong>
+        {{ journey.exit_time or "Not recorded" }}
+    </p>
+
+</div>
+
+<hr>
+
+{% endfor %}
+
+{% else %}
+
+<p>📭 No journey history available.</p>
+
+{% endif %}
+
+<br>
+
+<a href="{{ url_for('dashboard') }}">
+    ← Back to Dashboard
+</a>
+
+</body>
+</html>

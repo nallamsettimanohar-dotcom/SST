@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Driver - Route</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<h1>🛣️ My Bus Route</h1>
+
+{% if route %}
+
+<h2>{{ route.route_name }}</h2>
+
+<p>
+    <strong>Start Point:</strong>
+    {{ route.start_point }}
+</p>
+
+<p>
+    <strong>End Point:</strong>
+    {{ route.end_point }}
+</p>
+
+<h3>Optimized Route</h3>
+
+<p>
+    {{ route.optimized_path or "No optimized route available." }}
+</p>
+
+{% else %}
+
+<p>❌ No route assigned to your bus.</p>
+
+{% endif %}
+
+<br>
+
+<a href="{{ url_for('dashboard') }}">
+    ← Back to Dashboard
+</a>
+
+</body>
+</html>

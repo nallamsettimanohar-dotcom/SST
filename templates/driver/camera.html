@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Driver Camera</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<h1>📹 Bus Camera</h1>
+
+{% if bus %}
+
+<p>
+    <strong>Bus:</strong>
+    {{ bus.bus_number }}
+</p>
+
+<input type="hidden"
+       id="bus-id"
+       value="{{ bus.bus_id }}">
+
+<video id="camera-video"
+       autoplay
+       playsinline
+       width="700">
+</video>
+
+<br><br>
+
+<button onclick="startCamera()">
+    ▶ Start Camera
+</button>
+
+<button onclick="captureSnapshot()">
+    📸 Capture Snapshot
+</button>
+
+<button onclick="stopCamera()">
+    ⏹ Stop Camera
+</button>
+
+<p id="camera-status">
+    Camera is offline.
+</p>
+
+<canvas id="camera-canvas"
+        style="display:none;">
+</canvas>
+
+{% else %}
+
+<p>❌ No bus is assigned to you.</p>
+
+{% endif %}
+
+<br>
+
+<a href="{{ url_for('dashboard') }}">
+    ← Back to Dashboard
+</a>
+
+<script>
+
+let cameraStream = null;
+
+
+async function startCamera() {
+
+    try {
+
+        cameraStream =
+            await navigator.mediaDevices.getUserMedia({
+                video: true,
+                audio: false
+            });
+
+        document.getElementById(
+            "camera-video"
+        ).srcObject = cameraStream;
+
+        document.getElementById(
+            "camera-status"
+        ).innerText =
+            "🟢 Camera is active.";
+
+    } catch (error) {
+
+        console.error(error);
+
+        document.getElementById(
+            "camera-status"
+        ).innerText =
+            "❌ Camera permission denied.";
+    }
+}
+
+
+function stopCamera() {
+
+    if (cameraStream) {
+
+        cameraStream.getTracks().forEach(
+            track => track.stop()
+        );
+
+        cameraStream = null;
+    }
+
+    document.getElementById(
+        "camera-video"
+    ).srcObject = null;
+
+    document.getElementById(
+        "camera-status"
+    ).innerText =
+        "🔴 Camera stopped.";
+}
+
+
+function captureSnapshot() {
+
+    if (!cameraStream) {
+
+        alert("Start the camera first.");
+
+        return;
+    }
+
+
+    const video =
+        document.getElementById(
+            "camera-video"
+        );
+
+    const canvas =
+        document.getElementById(
+            "camera-canvas"
+        );
+
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+
+    const context =
+        canvas.getContext("2d");
+
+
+    context.drawImage(
+        video,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+
+    const image =
+        canvas.toDataURL("image/jpeg");
+
+
+    const busId =
+        document.getElementById(
+            "bus-id"
+        ).value;
+
+
+    fetch("/camera/snapshot", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+
+            image: image,
+
+            bus_id: busId
+
+        })
+
+    })
+
+    .then(response => response.json())
+
+    .then(data => {
+
+        if (data.success) {
+
+            document.getElementById(
+                "camera-status"
+            ).innerText =
+                "✅ Snapshot saved successfully.";
+
+        } else {
+
+            document.getElementById(
+                "camera-status"
+            ).innerText =
+                "❌ " + data.error;
+        }
+
+    })
+
+    .catch(error => {
+
+        console.error(error);
+
+        document.getElementById(
+            "camera-status"
+        ).innerText =
+            "❌ Unable to save snapshot.";
+    });
+}
+
+</script>
+
+</body>
+</html>

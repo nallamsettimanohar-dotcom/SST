@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Bus Details</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<h1>🚌 Bus Details</h1>
+
+{% if bus %}
+
+<p>
+    <strong>Bus ID:</strong>
+    {{ bus.bus_id }}
+</p>
+
+<p>
+    <strong>Bus Number:</strong>
+    {{ bus.bus_number }}
+</p>
+
+<p>
+    <strong>Driver ID:</strong>
+    {{ bus.driver_id }}
+</p>
+
+<p>
+    <strong>Status:</strong>
+    {{ bus.status }}
+</p>
+
+<p>
+    <strong>Capacity:</strong>
+    {{ bus.capacity }}
+</p>
+
+{% else %}
+
+<p>❌ No bus is assigned to your child.</p>
+
+{% endif %}
+
+<br>
+
+<a href="{{ url_for('dashboard') }}">
+    ← Back to Dashboard
+</a>
+
+</body>
+</html>

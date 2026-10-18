@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Emergency Alert</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<h1>🚨 Emergency Alert</h1>
+
+{% if bus %}
+
+<p>
+    <strong>Bus Number:</strong>
+    {{ bus.bus_number }}
+</p>
+
+<form method="POST"
+      action="{{ url_for('emergency') }}">
+
+    <input type="hidden"
+           name="bus_id"
+           value="{{ bus.bus_id }}">
+
+    <label>Latitude</label>
+    <br>
+
+    <input type="text"
+           name="latitude"
+           id="latitude">
+
+    <br><br>
+
+    <label>Longitude</label>
+    <br>
+
+    <input type="text"
+           name="longitude"
+           id="longitude">
+
+    <br><br>
+
+    <label>Emergency Message</label>
+    <br>
+
+    <textarea name="message"
+              rows="5"
+              cols="50"
+              required>Emergency alert from school bus.</textarea>
+
+    <br><br>
+
+    <button type="submit">
+        🚨 SEND EMERGENCY ALERT
+    </button>
+
+</form>
+
+{% else %}
+
+<p>❌ No bus is assigned to you.</p>
+
+{% endif %}
+
+<br>
+
+<a href="{{ url_for('dashboard') }}">
+    ← Back to Dashboard
+</a>
+
+<script>
+
+if (navigator.geolocation) {
+
+    navigator.geolocation.getCurrentPosition(
+
+        function(position) {
+
+            document.getElementById("latitude").value =
+                position.coords.latitude;
+
+            document.getElementById("longitude").value =
+                position.coords.longitude;
+        }
+
+    );
+
+}
+
+</script>
+
+</body>
+</html>

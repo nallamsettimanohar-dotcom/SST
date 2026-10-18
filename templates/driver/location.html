@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Live Bus Location</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<h1>📍 Live Bus Location</h1>
+
+<p id="status">
+    Starting location tracking...
+</p>
+
+<div id="coordinates">
+    Waiting for GPS location...
+</div>
+
+<br>
+
+<button onclick="startLocationTracking()">
+    ▶ Start Location Tracking
+</button>
+
+<button onclick="stopLocationTracking()">
+    ⏹ Stop Location Tracking
+</button>
+
+<br><br>
+
+<a href="{{ url_for('dashboard') }}">
+    ← Back to Dashboard
+</a>
+
+<script>
+
+let locationWatcher = null;
+
+
+function startLocationTracking() {
+
+    const status =
+        document.getElementById("status");
+
+    if (!navigator.geolocation) {
+
+        status.innerText =
+            "❌ GPS is not supported by this browser.";
+
+        return;
+    }
+
+    status.innerText =
+        "📍 Starting GPS tracking...";
+
+
+    locationWatcher =
+        navigator.geolocation.watchPosition(
+
+            sendLocation,
+
+            locationError,
+
+            {
+                enableHighAccuracy: true,
+                maximumAge: 5000,
+                timeout: 10000
+            }
+        );
+}
+
+
+function sendLocation(position) {
+
+    const latitude =
+        position.coords.latitude;
+
+    const longitude =
+        position.coords.longitude;
+
+
+    document.getElementById("status").innerText =
+        "📍 GPS location obtained. Sending...";
+
+
+    document.getElementById("coordinates").innerHTML =
+
+        "<strong>Latitude:</strong> " +
+        latitude +
+
+        "<br><strong>Longitude:</strong> " +
+        longitude;
+
+
+    fetch("/api/location", {
+
+        method: "POST",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+
+            latitude: latitude,
+            longitude: longitude
+
+        })
+
+    })
+
+    .then(response => {
+
+        if (!response.ok) {
+            throw new Error("Location update failed");
+        }
+
+        return response.json();
+
+    })
+
+    .then(data => {
+
+        console.log("Location updated:", data);
+
+        document.getElementById("status").innerText =
+            "✓ Location updated successfully.";
+
+    })
+
+    .catch(error => {
+
+        console.error(error);
+
+        document.getElementById("status").innerText =
+            "❌ Unable to send location.";
+
+    });
+}
+
+
+function locationError(error) {
+
+    let message =
+        "Unable to access GPS location.";
+
+
+    if (error.code === 1) {
+
+        message =
+            "Location permission was denied.";
+
+    } else if (error.code === 2) {
+
+        message =
+            "Location information is unavailable.";
+
+    } else if (error.code === 3) {
+
+        message =
+            "Location request timed out.";
+    }
+
+
+    document.getElementById("status").innerText =
+        "❌ " + message;
+}
+
+
+function stopLocationTracking() {
+
+    if (locationWatcher !== null) {
+
+        navigator.geolocation.clearWatch(
+            locationWatcher
+        );
+
+        locationWatcher = null;
+    }
+
+    document.getElementById("status").innerText =
+        "⏹ Location tracking stopped.";
+}
+
+
+startLocationTracking();
+
+</script>
+
+</body>
+</html>
